@@ -1,0 +1,17 @@
+service:
+  open-ai:
+    key: <YOUR-API-KEY>
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: error
+
+spring:
+  main:
+    banner-mode: "off"
+    application:
+      group: open-ai
+      name: open-ai-tale-generator
