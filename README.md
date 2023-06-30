@@ -30,4 +30,4 @@ service:
 
 3. Build the project using the command: `./gradlew build -x test`
 4. Start the SpringBoot Aplication using the command: `./gradlew bootRun`
-5. Open the browser and pass the desired title to generate `localhost:8080/v1/open-ai/tales?title=your_title_here` or use a tool like [Postman](https://www.postman.com/) to make a GET request to the same URL. Otherwise, eu can access throgh the Swagger UI at `localhost:8080/swagger-ui.html`
+5. Open the browser and pass the desired title to generate `localhost:8080/v1/open-ai/tales?title=your_title_here` or use a tool like [Postman](https://www.postman.com/) to make a GET request to the same URL. Otherwise, you can access throgh the Swagger UI at `localhost:8080/swagger-ui.html`
