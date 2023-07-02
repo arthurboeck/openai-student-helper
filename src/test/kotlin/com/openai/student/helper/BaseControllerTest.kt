@@ -12,6 +12,12 @@ import org.springframework.test.web.servlet.MockMvc
 @ActiveProfiles(profiles = ["test"])
 abstract class BaseControllerTest {
 
+    val CONSTRAINT_VIOLATION_EXCEPTION_MSG = "jakarta.validation.ConstraintViolationException:"
+    val TOPIC_REQUIRED_MSG = "Topic is required"
+
+    val UNAUTHORIZED_EXCEPTION_MSG = "com.openai.student.helper.infra.exceptions.UnauthorizedException:"
+    val UNAUTHORIZED_INVALID_KEY_MSG = "User Unauthorized - Invalid Open AI key"
+
     @Autowired
     lateinit var mvc: MockMvc
 }
