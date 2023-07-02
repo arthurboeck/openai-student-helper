@@ -1,4 +1,4 @@
-package com.openai.student.helper.client
+package com.openai.student.helper.infra.client
 
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.ChatCompletionRequest
@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException
 class OpenAIClient(
     @Value("\${service.open-ai.key}")
     val openAiKey: String? = null
-) {
+) : IOpenAIClient {
 
     private val modelId: String = "gpt-3.5-turbo"
     private val systemPrompt: String = "Você é um escritor de contos."
@@ -29,11 +29,11 @@ class OpenAIClient(
     }
 
     @OptIn(BetaOpenAI::class)
-    suspend fun createTale(title: String): String {
+    override suspend fun integrateChatGpt(context: String, question: String): String {
         val chatCompletionRequest = ChatCompletionRequest(
             model = ModelId(modelId), messages = listOf(
-                ChatMessage(role = ChatRole.System, content = systemPrompt),
-                ChatMessage(role = ChatRole.User, content = "Escreva-me um conto, em dois paragrafos com o seguinte título: \"$title\"")
+                ChatMessage(role = ChatRole.System, content = context),
+                ChatMessage(role = ChatRole.User, content = question)
             )
         )
 
