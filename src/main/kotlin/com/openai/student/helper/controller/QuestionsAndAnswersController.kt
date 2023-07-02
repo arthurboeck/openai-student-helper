@@ -1,7 +1,7 @@
 package com.openai.student.helper.controller
 
 import com.openai.student.helper.infra.client.MessageDTO
-import com.openai.student.helper.service.topicquestions.ITopicQuestionsService
+import com.openai.student.helper.service.questionsandanswers.IQuestionsAndAnswersService
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.NotBlank
 import org.springframework.http.MediaType.*
@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 @RestController
 @RequestMapping("/v1/open-ai/student-helper")
-class TopicQuestionController(private val topicQuestion: ITopicQuestionsService){
+class QuestionsAndAnswersController(private val iQuestionsAndAnswersService: IQuestionsAndAnswersService){
 
     @Operation(summary = "Questions and answers based on topic for study", description = "Returns three questions and answers for study based on the inputted topic in text/plain content type.")
-    @GetMapping("/topic-question/text", produces = [TEXT_PLAIN_VALUE])
+    @GetMapping("/question-answer/text", produces = [TEXT_PLAIN_VALUE])
     fun topicQuestionsInText(
         @NotBlank(message = "Topic is required")
         @RequestParam("topic") topic: String): String {
-        return topicQuestion.getTopicQuestions(topic)
+        return iQuestionsAndAnswersService.getQuestionsAndAnswers(topic)
     }
 
 
     @Operation(summary = "Questions and answers based on topic for study", description = "Returns three questions and answers for study based on the inputted topic in application/json content type.")
-    @GetMapping("/topic-question/json", produces = [APPLICATION_JSON_VALUE])
+    @GetMapping("/question-answer/json", produces = [APPLICATION_JSON_VALUE])
     fun topicQuestionsInJson(
         @NotBlank(message = "Topic is required")
         @RequestParam("topic") topic: String): MessageDTO {
-        return MessageDTO(topicQuestion.getTopicQuestions(topic))
+        return MessageDTO(iQuestionsAndAnswersService.getQuestionsAndAnswers(topic))
     }
 }
