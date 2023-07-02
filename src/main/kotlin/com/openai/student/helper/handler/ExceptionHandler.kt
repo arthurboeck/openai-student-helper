@@ -17,7 +17,7 @@ class ExceptionHandler {
 
     @ResponseBody
     @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler(*[ConstraintViolationException::class, ValidationException::class])
+    @ExceptionHandler(ConstraintViolationException::class, ValidationException::class)
     fun validateExceptionHandler(exception: Exception): ResponseEntity<ErrorApiDTO> {
         val error = ErrorApiDTO(
             exception.toString(),
