@@ -1,0 +1,14 @@
+service:
+  open-ai:
+    key: my-key
+
+logging:
+  level:
+    root: error
+
+spring:
+  main:
+    banner-mode: "off"
+    application:
+      group: open-ai
+      name: open-ai-tale-generator
