@@ -4,7 +4,6 @@ import com.openai.student.helper.infra.client.MessageDTO
 import com.openai.student.helper.service.contentsuggestion.IContentSuggestionService
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Pattern
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.MediaType.TEXT_PLAIN_VALUE
 import org.springframework.validation.annotation.Validated
@@ -22,7 +21,6 @@ class ContentSuggestionController(private val contentSuggestion: IContentSuggest
     @GetMapping("/content-suggestion/text", produces = [TEXT_PLAIN_VALUE])
     fun contentSuggestionsInText(
         @NotBlank(message = "Topic is required")
-        @Pattern(regexp = "\\S+", message = "Topic cannot be empty or contain only whitespace")
         @RequestParam("topic") topic: String): String {
         return contentSuggestion.getContentSuggestion(topic)
     }
@@ -31,7 +29,6 @@ class ContentSuggestionController(private val contentSuggestion: IContentSuggest
     @GetMapping("/content-suggestion/json", produces = [APPLICATION_JSON_VALUE])
     fun contentSuggestionsInJson(
         @NotBlank(message = "Topic is required")
-        @Pattern(regexp = "\\S+", message = "Topic cannot be empty or contain only whitespace")
         @RequestParam("topic") topic: String): MessageDTO {
         return MessageDTO(contentSuggestion.getContentSuggestion(topic))
     }

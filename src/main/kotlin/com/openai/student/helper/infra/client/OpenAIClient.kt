@@ -7,6 +7,7 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.exception.AuthenticationException
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
+import com.openai.student.helper.infra.exceptions.UnauthorizedException
 import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus.*
@@ -25,7 +26,7 @@ class OpenAIClient(
     init {
         openAiKey?.let {
             openAIService = OpenAI(token = it)
-        } ?: throw ResponseStatusException(UNAUTHORIZED, "User Unauthorized - Open AI Key Not Set")
+        } ?: throw UnauthorizedException("User Unauthorized - Open AI Key Not Set")
     }
 
     @OptIn(BetaOpenAI::class)
@@ -43,7 +44,7 @@ class OpenAIClient(
                  response.choices.first().message?.content ?: throw ResponseStatusException(NOT_FOUND,"No message")
 
             } catch (e: AuthenticationException) {
-                throw ResponseStatusException(UNAUTHORIZED, "User Unauthorized - Invalid Open AI key, $e")
+                throw UnauthorizedException("User Unauthorized - Invalid Open AI key, $e")
             }
         }
     }

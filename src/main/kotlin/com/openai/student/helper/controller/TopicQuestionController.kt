@@ -4,7 +4,6 @@ import com.openai.student.helper.infra.client.MessageDTO
 import com.openai.student.helper.service.topicquestions.ITopicQuestionsService
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Pattern
 import org.springframework.http.MediaType.*
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,7 +20,6 @@ class TopicQuestionController(private val topicQuestion: ITopicQuestionsService)
     @GetMapping("/topic-question/text", produces = [TEXT_PLAIN_VALUE])
     fun topicQuestionsInText(
         @NotBlank(message = "Topic is required")
-        @Pattern(regexp = "\\S+", message = "Topic cannot be empty or contain only whitespace")
         @RequestParam("topic") topic: String): String {
         return topicQuestion.getTopicQuestions(topic)
     }
@@ -31,7 +29,6 @@ class TopicQuestionController(private val topicQuestion: ITopicQuestionsService)
     @GetMapping("/topic-question/json", produces = [APPLICATION_JSON_VALUE])
     fun topicQuestionsInJson(
         @NotBlank(message = "Topic is required")
-        @Pattern(regexp = "\\S+", message = "Topic cannot be empty or contain only whitespace")
         @RequestParam("topic") topic: String): MessageDTO {
         return MessageDTO(topicQuestion.getTopicQuestions(topic))
     }
