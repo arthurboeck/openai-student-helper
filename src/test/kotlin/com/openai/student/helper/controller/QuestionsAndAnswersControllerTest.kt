@@ -19,8 +19,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 @WebMvcTest(controllers = [QuestionsAndAnswersController::class])
 class QuestionsAndAnswersControllerTest : BaseControllerTest() {
 
-    private val CONTENT_SUGGESTION_TEXT = "/v1/open-ai/student-helper/question-answer/text"
-    private val CONTENT_SUGGESTION_JSON = "/v1/open-ai/student-helper/question-answer/json"
+    private val QUESTION_ANSWER_TEXT_ROUTE = "/v1/open-ai/student-helper/question-answer/text"
+    private val QUESTION_ANSWER_JSON_ROUTE = "/v1/open-ai/student-helper/question-answer/json"
     
     @MockBean
     private lateinit var iTopicQuestionsService: IQuestionsAndAnswersService
@@ -28,7 +28,7 @@ class QuestionsAndAnswersControllerTest : BaseControllerTest() {
     @ParameterizedTest
     @ValueSource(strings = ["", " "])
     fun `Must Returns Bad Request on Questions TEXT when topic is empty`(topic: String) {
-        validateBadRequest(CONTENT_SUGGESTION_TEXT, topic)
+        validateBadRequest(QUESTION_ANSWER_TEXT_ROUTE, topic)
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.error", containsString(CONSTRAINT_VIOLATION_EXCEPTION_MSG)))
             .andExpect(jsonPath("$.error", containsString(TOPIC_REQUIRED_MSG)))
@@ -37,7 +37,7 @@ class QuestionsAndAnswersControllerTest : BaseControllerTest() {
     @ParameterizedTest
     @ValueSource(strings = ["", " "])
     fun `Must Returns Bad Request on Questions JSON when topic is empty`(topic: String) {
-        validateBadRequest(CONTENT_SUGGESTION_JSON, topic)
+        validateBadRequest(QUESTION_ANSWER_JSON_ROUTE, topic)
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.error", containsString(CONSTRAINT_VIOLATION_EXCEPTION_MSG)))
             .andExpect(jsonPath("$.error", containsString(TOPIC_REQUIRED_MSG)))
@@ -45,28 +45,28 @@ class QuestionsAndAnswersControllerTest : BaseControllerTest() {
 
     @Test
     fun `Must Returns Sucess on Questions TEXT when topic is sent`(){
-        validateSuccessRequest(CONTENT_SUGGESTION_TEXT)
+        validateSuccessRequest(QUESTION_ANSWER_TEXT_ROUTE)
             .andExpect(status().isOk)
             .andExpect(content().string("Bananas são frutas"))
     }
 
     @Test
     fun `Must Returns Sucess on Questions JSON when topic is sent`(){
-        validateSuccessRequest(CONTENT_SUGGESTION_JSON)
+        validateSuccessRequest(QUESTION_ANSWER_JSON_ROUTE)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.message", `is`("Bananas são frutas")))
     }
 
     @Test
     fun `Must Returns Unauthorized on Questions TEXT when Open AI Key is Invalid`(){
-        validateUnauthorizedRequest(CONTENT_SUGGESTION_TEXT)
+        validateUnauthorizedRequest(QUESTION_ANSWER_TEXT_ROUTE)
             .andExpect(status().isUnauthorized)
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_EXCEPTION_MSG)))
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_INVALID_KEY_MSG)))
     }
     @Test
     fun `Must Returns Unauthorized on Questions JSON when Open AI Key is Invalid`(){
-        validateUnauthorizedRequest(CONTENT_SUGGESTION_JSON)
+        validateUnauthorizedRequest(QUESTION_ANSWER_JSON_ROUTE)
             .andExpect(status().isUnauthorized)
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_EXCEPTION_MSG)))
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_INVALID_KEY_MSG)))
