@@ -8,7 +8,7 @@ class ContentSuggestionService(private val serviceClient: OpenAIClient) : IConte
 
     private val context: String = "Você é um auxiliar para estudos."
 
-    override suspend fun getContentSuggestion(topic: String): String {
+    override fun getContentSuggestion(topic: String): String {
         val question = "Me sugira três pontos chave para estudar sobre: \"$topic\""
         return serviceClient.integrateChatGpt(context, question)
     }

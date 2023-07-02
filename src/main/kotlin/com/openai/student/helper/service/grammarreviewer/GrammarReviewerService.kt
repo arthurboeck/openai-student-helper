@@ -8,7 +8,7 @@ class GrammarReviewerService(private val serviceClient: OpenAIClient) : IGrammar
 
     private val context: String = "Você é um revisor de textos."
 
-    override suspend fun getGrammarReviewerService(text: String): String {
+    override fun getGrammarReviewerService(text: String): String {
         val question = "Revise o texto a seguir e sugira melhorias gramaticais, retornando apenas o texto corrido: \"$text\""
         val reviewedText = serviceClient.integrateChatGpt(context, question)
 

@@ -7,6 +7,7 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.exception.AuthenticationException
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
+import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus.*
 import org.springframework.stereotype.Service
@@ -28,7 +29,7 @@ class OpenAIClient(
     }
 
     @OptIn(BetaOpenAI::class)
-    override suspend fun integrateChatGpt(context: String, question: String): String {
+    override fun integrateChatGpt(context: String, question: String): String {
         val chatCompletionRequest = ChatCompletionRequest(
             model = ModelId(modelId), messages = listOf(
                 ChatMessage(role = ChatRole.System, content = context),
@@ -36,11 +37,14 @@ class OpenAIClient(
             )
         )
 
-        try {
-            val response = openAIService.chatCompletion(chatCompletionRequest)
-            return response.choices.first().message?.content ?: throw ResponseStatusException(NOT_FOUND, "No message")
-        } catch (e: AuthenticationException) {
-            throw ResponseStatusException(UNAUTHORIZED, "User Unauthorized - Invalid Open AI key, $e")
+        return runBlocking {
+            try {
+                val response = openAIService.chatCompletion(chatCompletionRequest)
+                 response.choices.first().message?.content ?: throw ResponseStatusException(NOT_FOUND,"No message")
+
+            } catch (e: AuthenticationException) {
+                throw ResponseStatusException(UNAUTHORIZED, "User Unauthorized - Invalid Open AI key, $e")
+            }
         }
     }
 }

@@ -15,16 +15,16 @@ import org.springframework.web.server.ResponseStatusException
 @RequestMapping("/v1/open-ai/student-helper")
 class GrammarReviewerController(private val grammarReviewer: IGrammarReviewerService){
 
-    @Operation(summary = "Grammar Reviewer based on txt file", description = "Returns the text from your txt file with the suggested review in plain/text content type.")
+    @Operation(summary = "Grammar Reviewer based on txt file", description = "Returns the text from your txt file with the suggested review in text/plain content type.")
     @PostMapping("/grammar-reviewer/text", consumes = [MULTIPART_FORM_DATA_VALUE])
-    suspend fun topicSuggestionsInText(
+    fun topicSuggestionsInText(
         @RequestPart("file") file: MultipartFile): String {
         return grammarReviewer.getGrammarReviewerService(extractFileContent(file))
     }
 
     @Operation(summary = "Grammar Reviewer based on txt file", description = "Returns the text from your txt file with the suggested review in application/json content type.")
     @PostMapping("/grammar-reviewer/json", consumes = [MULTIPART_FORM_DATA_VALUE])
-    suspend fun topicSuggestionsInJson(
+    fun topicSuggestionsInJson(
         @RequestPart("file") file: MultipartFile): MessageDTO {
         return MessageDTO(grammarReviewer.getGrammarReviewerService(extractFileContent(file)))
     }

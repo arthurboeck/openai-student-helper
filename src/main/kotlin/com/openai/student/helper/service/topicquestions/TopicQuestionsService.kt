@@ -8,7 +8,7 @@ class TopicQuestionsService(private val serviceClient: OpenAIClient) : ITopicQue
 
     private val context: String = "Você é um auxiliar para estudos."
 
-    override suspend fun getTopicQuestions(topic: String): String {
+    override  fun getTopicQuestions(topic: String): String {
         val question = "Me sugira três perguntas e suas respostas sobre: \"$topic\""
         return serviceClient.integrateChatGpt(context, question)
     }
