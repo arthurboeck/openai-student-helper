@@ -19,7 +19,6 @@ class OpenAIClient(
 ) : IOpenAIClient {
 
     private val modelId: String = "gpt-3.5-turbo"
-    private val systemPrompt: String = "Você é um escritor de contos."
     private lateinit var openAIService: OpenAI
 
     init {

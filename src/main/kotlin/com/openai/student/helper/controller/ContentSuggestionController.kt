@@ -1,7 +1,8 @@
 package com.openai.student.helper.controller
 
 import com.openai.student.helper.infra.client.MessageDTO
-import com.openai.student.helper.service.ITopicSugestionService
+import com.openai.student.helper.service.contentsuggestion.IContentSuggestionService
+import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 
@@ -14,21 +15,23 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 @RestController
 @RequestMapping("/v1/open-ai/student-helper")
-class StudentHelperController(private val topicSugestion: ITopicSugestionService){
+class ContentSuggestionController(private val contentSuggestion: IContentSuggestionService){
 
-    @GetMapping("/topic-sugestion/text")
-    suspend fun topicSuggestorInText(
+    @Operation(summary = "Contents for study based on topic", description = "Returns three contents for study based on the inputted topic in application/json content type.")
+    @GetMapping("/content-suggestion/text")
+    suspend fun contentSuggestionsInText(
         @NotBlank(message = "Topic is required")
         @Pattern(regexp = "\\S+", message = "Topic cannot be empty or contain only whitespace")
         @RequestParam("topic") topic: String): String {
-        return topicSugestion.getTopicSugestion(topic)
+        return contentSuggestion.getContentSuggestion(topic)
     }
 
-    @GetMapping("/topic-sugestion/json")
-    suspend fun topicSuggestorInJson(
+    @Operation(summary = "Contents for study based on topic", description = "Returns three contents for study based on the inputted topic in application/json content type.")
+    @GetMapping("/content-suggestion/json")
+    suspend fun contentSuggestionsInJson(
         @NotBlank(message = "Topic is required")
         @Pattern(regexp = "\\S+", message = "Topic cannot be empty or contain only whitespace")
         @RequestParam("topic") topic: String): MessageDTO {
-        return MessageDTO(topicSugestion.getTopicSugestion(topic))
+        return MessageDTO(contentSuggestion.getContentSuggestion(topic))
     }
 }
