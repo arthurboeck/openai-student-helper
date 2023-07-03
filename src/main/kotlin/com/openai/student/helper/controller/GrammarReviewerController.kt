@@ -1,6 +1,6 @@
 package com.openai.student.helper.controller
 
-import com.openai.student.helper.infra.client.MessageDTO
+import com.openai.student.helper.infra.MessageDTO
 import com.openai.student.helper.infra.exceptions.InvalidFileTypeException
 import com.openai.student.helper.service.grammarreviewer.IGrammarReviewerService
 import io.swagger.v3.oas.annotations.Operation
