@@ -1,6 +1,7 @@
 package com.openai.student.helper.controller
 
 import com.openai.student.helper.BaseUnitTest
+import com.openai.student.helper.infra.exceptions.NotFoundException
 import com.openai.student.helper.infra.exceptions.UnauthorizedException
 import com.openai.student.helper.service.contentsuggestion.IContentSuggestionService
 import org.hamcrest.Matchers.containsString
@@ -23,7 +24,7 @@ class ContentSuggestionControllerTest : BaseUnitTest() {
 
     private val CONTENT_SUGGESTION_TEXT_ROUTE = "/v1/open-ai/student-helper/content-suggestion/text"
     private val CONTENT_SUGGESTION_JSON_ROUTE = "/v1/open-ai/student-helper/content-suggestion/json"
-    
+
     @MockBean
     private lateinit var iContentSuggestion: IContentSuggestionService
 
@@ -49,40 +50,56 @@ class ContentSuggestionControllerTest : BaseUnitTest() {
     }
 
     @Test
-    fun `Must Returns Sucess on Content Suggestion TEXT when topic is sent`(){
+    fun `Must Returns Sucess on Content Suggestion TEXT when topic is sent`() {
         validateSuccessRequest(CONTENT_SUGGESTION_TEXT_ROUTE)
             .andExpect(status().isOk)
             .andExpect(content().string("Bananas são frutas"))
     }
 
     @Test
-    fun `Must Returns Sucess on Content Suggestion JSON when topic is sent`(){
+    fun `Must Returns Sucess on Content Suggestion JSON when topic is sent`() {
         validateSuccessRequest(CONTENT_SUGGESTION_JSON_ROUTE)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.message", `is`("Bananas são frutas")))
     }
 
     @Test
-    fun `Must Returns Unauthorized on Content Suggestion TEXT when Open AI Key is Invalid`(){
+    fun `Must Returns Unauthorized on Content Suggestion TEXT when Open AI Key is Invalid`() {
         validateUnauthorizedRequest(CONTENT_SUGGESTION_TEXT_ROUTE)
             .andExpect(status().isUnauthorized)
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_EXCEPTION_MSG)))
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_INVALID_KEY_MSG)))
     }
+
     @Test
-    fun `Must Returns Unauthorized on Content Suggestion JSON when Open AI Key is Invalid`(){
+    fun `Must Returns Unauthorized on Content Suggestion JSON when Open AI Key is Invalid`() {
         validateUnauthorizedRequest(CONTENT_SUGGESTION_JSON_ROUTE)
             .andExpect(status().isUnauthorized)
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_EXCEPTION_MSG)))
             .andExpect(jsonPath("$.error", containsString(UNAUTHORIZED_INVALID_KEY_MSG)))
     }
 
-    private fun validateBadRequest(route: String,topic: String): ResultActions {
+    @Test
+    fun `Must Returns NotFound on Content Suggestion TEXT`() {
+        validateNotFoundRequest(CONTENT_SUGGESTION_TEXT_ROUTE)
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("$.error", `is`(NOT_FOUND_EXCEPTION_MSG)))
+    }
+
+    @Test
+    fun `Must Returns NotFound on Content Suggestion JSON`() {
+        validateNotFoundRequest(CONTENT_SUGGESTION_JSON_ROUTE)
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("$.error", `is`(NOT_FOUND_EXCEPTION_MSG)))
+    }
+
+    private fun validateBadRequest(route: String, topic: String): ResultActions {
         return mvc.perform(
             get(route)
                 .queryParam("topic", topic)
         )
     }
+
     private fun validateSuccessRequest(route: String): ResultActions {
         doReturn("Bananas são frutas").`when`(iContentSuggestion).getContentSuggestion("bananas")
 
@@ -91,8 +108,19 @@ class ContentSuggestionControllerTest : BaseUnitTest() {
                 .queryParam("topic", "bananas")
         )
     }
+
     private fun validateUnauthorizedRequest(route: String): ResultActions {
         doThrow(UnauthorizedException("User Unauthorized - Invalid Open AI key"))
+            .`when`(iContentSuggestion).getContentSuggestion("bananas")
+
+        return mvc.perform(
+            get(route)
+                .queryParam("topic", "bananas")
+        )
+    }
+
+    private fun validateNotFoundRequest(route: String): ResultActions {
+        doThrow(NotFoundException("No message"))
             .`when`(iContentSuggestion).getContentSuggestion("bananas")
 
         return mvc.perform(

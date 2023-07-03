@@ -19,4 +19,6 @@ abstract class BaseUnitTest {
 
     val UNAUTHORIZED_EXCEPTION_MSG = "com.openai.student.helper.infra.exceptions.UnauthorizedException:"
     val UNAUTHORIZED_INVALID_KEY_MSG = "User Unauthorized - Invalid Open AI key"
+
+    val NOT_FOUND_EXCEPTION_MSG = "com.openai.student.helper.infra.exceptions.NotFoundException: No message"
 }
