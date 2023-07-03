@@ -1,6 +1,6 @@
 package com.openai.student.helper.controller
 
-import com.openai.student.helper.BaseControllerTest
+import com.openai.student.helper.BaseUnitTest
 import com.openai.student.helper.infra.exceptions.UnauthorizedException
 import com.openai.student.helper.service.questionsandanswers.IQuestionsAndAnswersService
 import org.hamcrest.Matchers.containsString
@@ -10,20 +10,25 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.doThrow
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 @WebMvcTest(controllers = [QuestionsAndAnswersController::class])
-class QuestionsAndAnswersControllerTest : BaseControllerTest() {
+class QuestionsAndAnswersControllerTest : BaseUnitTest() {
 
     private val QUESTION_ANSWER_TEXT_ROUTE = "/v1/open-ai/student-helper/question-answer/text"
     private val QUESTION_ANSWER_JSON_ROUTE = "/v1/open-ai/student-helper/question-answer/json"
     
     @MockBean
     private lateinit var iTopicQuestionsService: IQuestionsAndAnswersService
+
+    @Autowired
+    lateinit var mvc: MockMvc
 
     @ParameterizedTest
     @ValueSource(strings = ["", " "])

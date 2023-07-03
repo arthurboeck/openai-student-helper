@@ -1,6 +1,6 @@
 package com.openai.student.helper.controller
 
-import com.openai.student.helper.BaseControllerTest
+import com.openai.student.helper.BaseUnitTest
 import com.openai.student.helper.infra.exceptions.UnauthorizedException
 import com.openai.student.helper.service.grammarreviewer.IGrammarReviewerService
 import org.hamcrest.Matchers.containsString
@@ -8,23 +8,28 @@ import org.hamcrest.Matchers.`is`
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.doThrow
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE
 import org.springframework.mock.web.MockMultipartFile
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 
 @WebMvcTest(controllers = [GrammarReviewerController::class])
-class GrammarReviewerControllerTest : BaseControllerTest() {
+class GrammarReviewerControllerTest : BaseUnitTest() {
 
     private val GRAMMAR_REVIEWER_TEXT_ROUTE = "/v1/open-ai/student-helper/grammar-reviewer/text"
     private val GRAMMAR_REVIEWER_JSON_ROUTE = "/v1/open-ai/student-helper/grammar-reviewer/json"
     
     @MockBean
     private lateinit var iGrammarReviewerService: IGrammarReviewerService
+
+    @Autowired
+    lateinit var mvc: MockMvc
 
     @Test
     fun `Must Returns Bad Request on Grammar Reviewer TEXT when no file is sent`() {
