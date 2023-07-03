@@ -83,6 +83,18 @@ class OpenAIServiceTest : BaseUnitTest() {
 
     @Test
     fun `Must throw UnauthorizedException when openai key not set`() {
+        val openAIServiceLocal = OpenAIService(iOpenAIClient = openAIClient)
+
+        val exception = assertThrows<UnauthorizedException> {
+            openAIServiceLocal.integrateChatGpt(context, question)
+        }
+
+        assertThat("User Unauthorized - Open AI Key Not Set")
+            .isEqualTo(exception.message)
+    }
+
+    @Test
+    fun `Must throw UnauthorizedException when openai key set as null`() {
         val openAIServiceLocal = OpenAIService(openAiKey = null, iOpenAIClient = openAIClient)
 
         val exception = assertThrows<UnauthorizedException> {
