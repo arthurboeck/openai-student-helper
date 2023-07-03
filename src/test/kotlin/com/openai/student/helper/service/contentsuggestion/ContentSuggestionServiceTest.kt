@@ -1,7 +1,7 @@
 package com.openai.student.helper.service.contentsuggestion
 
 import com.openai.student.helper.BaseUnitTest
-import com.openai.student.helper.infra.client.IOpenAIClient
+import com.openai.student.helper.infra.client.openai.IOpenAIService
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.jupiter.api.BeforeEach
@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 class ContentSuggestionServiceTest : BaseUnitTest() {
 
     @MockBean
-    lateinit var openAIClient: IOpenAIClient
+    lateinit var openAIClient: IOpenAIService
     lateinit var service: ContentSuggestionService
 
     @BeforeEach

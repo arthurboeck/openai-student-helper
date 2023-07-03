@@ -1,6 +1,7 @@
 service:
   open-ai:
     key: <YOUR-API-KEY>
+    url: https://api.openai.com/v1
 
 server:
   port: 8080
