@@ -1,7 +1,9 @@
 package com.openai.student.helper.infra.handler
 
 import com.openai.student.helper.infra.exceptions.InvalidFileTypeException
+import com.openai.student.helper.infra.exceptions.NotFoundException
 import com.openai.student.helper.infra.exceptions.UnauthorizedException
+import feign.FeignException
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.ValidationException
 import org.springframework.http.HttpStatus.*
@@ -23,23 +25,41 @@ class ExceptionHandler {
         ConstraintViolationException::class,
         ValidationException::class,
         MissingServletRequestPartException::class,
-        InvalidFileTypeException::class)
+        InvalidFileTypeException::class
+    )
     fun badRequestExceptionHandler(exception: Exception): ResponseEntity<ErrorApiDTO> {
         val error = ErrorApiDTO(
             exception.toString(),
-            "${now()}")
+            "${now()}"
+        )
 
         return ResponseEntity.badRequest().body(error)
     }
 
     @ResponseBody
     @ResponseStatus(UNAUTHORIZED)
-    @ExceptionHandler(UnauthorizedException::class)
+    @ExceptionHandler(
+        UnauthorizedException::class,
+        FeignException.Unauthorized::class
+    )
     fun authenticationExceptionHandler(exception: Exception): ResponseEntity<ErrorApiDTO> {
         val error = ErrorApiDTO(
             exception.toString(),
-            "${now()}")
+            "${now()}"
+        )
 
         return ResponseEntity.status(UNAUTHORIZED).body(error)
+    }
+
+    @ResponseBody
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(NotFoundException::class)
+    fun notFoundExceptionHandler(exception: Exception): ResponseEntity<ErrorApiDTO> {
+        val error = ErrorApiDTO(
+            exception.toString(),
+            "${now()}"
+        )
+
+        return ResponseEntity.status(NOT_FOUND).body(error)
     }
 }

@@ -1,6 +1,7 @@
 service:
   open-ai:
-    key: my-key
+    key: YOUR_OPENAI_KEY
+    url: https://api.openai.com/v1
 
 logging:
   level:
