@@ -1,10 +1,10 @@
 package com.openai.student.helper.service.questionsandanswers
 
-import com.openai.student.helper.infra.client.OpenAIClient
+import com.openai.student.helper.infra.client.IOpenAIClient
 import org.springframework.stereotype.Service
 
 @Service
-class QuestionsAndAnswersService(private val serviceClient: OpenAIClient) : IQuestionsAndAnswersService {
+class QuestionsAndAnswersService(private val serviceClient: IOpenAIClient) : IQuestionsAndAnswersService {
 
     private val context: String = "Você é um auxiliar para estudos."
 

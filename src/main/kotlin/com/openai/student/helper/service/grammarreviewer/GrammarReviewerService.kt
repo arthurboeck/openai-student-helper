@@ -1,10 +1,10 @@
 package com.openai.student.helper.service.grammarreviewer
 
-import com.openai.student.helper.infra.client.OpenAIClient
+import com.openai.student.helper.infra.client.IOpenAIClient
 import org.springframework.stereotype.Service
 
 @Service
-class GrammarReviewerService(private val serviceClient: OpenAIClient) : IGrammarReviewerService {
+class GrammarReviewerService(private val serviceClient: IOpenAIClient) : IGrammarReviewerService {
 
     private val context: String = "Você é um revisor de textos."
 

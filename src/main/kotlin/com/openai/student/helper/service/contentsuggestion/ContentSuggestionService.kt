@@ -1,10 +1,10 @@
 package com.openai.student.helper.service.contentsuggestion
 
-import com.openai.student.helper.infra.client.OpenAIClient
+import com.openai.student.helper.infra.client.IOpenAIClient
 import org.springframework.stereotype.Service
 
 @Service
-class ContentSuggestionService(private val serviceClient: OpenAIClient) : IContentSuggestionService {
+class ContentSuggestionService(private val serviceClient: IOpenAIClient) : IContentSuggestionService {
 
     private val context: String = "Você é um auxiliar para estudos."
 
