@@ -1,10 +1,7 @@
 service:
   open-ai:
-    key: <YOUR-API-KEY>
+    key: YOUR_OPENAI_KEY
     url: https://api.openai.com/v1
-
-server:
-  port: 8080
 
 logging:
   level:
@@ -12,7 +9,7 @@ logging:
 
 spring:
   main:
-    banner-mode: "console"
+    banner-mode: "off"
     application:
       group: open-ai
       name: open-ai-tale-generator
