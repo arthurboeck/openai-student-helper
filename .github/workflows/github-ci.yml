@@ -18,7 +18,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
       - name: Running Unit Tests
         run: gradle test
 
@@ -36,5 +35,5 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build with Maven
+      - name: Build Gradle
         run: gradle build -x test
