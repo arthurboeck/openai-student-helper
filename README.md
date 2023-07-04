@@ -22,7 +22,7 @@ service:
 
 3. Build the project using the command: `./gradlew build -x test`
 4. Start the SpringBoot Aplication using the command: `./gradlew bootRun`
-5. Open the browser and access throgh the Swagger UI at `localhost:8080/swagger-ui.html`
+5. Open the browser and access the Swagger UI at `localhost:8080/swagger-ui.html`
 
 ## Structure
 
