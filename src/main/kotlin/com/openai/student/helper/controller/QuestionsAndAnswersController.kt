@@ -19,7 +19,7 @@ class QuestionsAndAnswersController(
 ){
 
     @Operation(summary = "Questions and answers based on topic for study", description = "Returns three questions and answers for study based on the inputted topic in text/plain content type.")
-    @GetMapping("/question-answer/text", produces = [TEXT_PLAIN_VALUE])
+    @GetMapping("/question-answer/text")
     fun topicQuestionsInText(
         @NotBlank(message = "Topic is required")
         @RequestParam("topic") topic: String): String {
