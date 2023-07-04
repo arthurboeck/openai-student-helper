@@ -12,7 +12,7 @@ logging:
 
 spring:
   main:
-    banner-mode: "off"
+    banner-mode: "console"
     application:
       group: open-ai
       name: open-ai-tale-generator
