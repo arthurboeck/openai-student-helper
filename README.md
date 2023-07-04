@@ -1,15 +1,7 @@
-# group components
-
-- Andrew Costa Silva - 1137978
-- Arthur Guterres Boeck - 1470051
-- Danielson Augusto - 1481701
-- Diego Ribeiro Alvarenga Silva - 1200783
-- Guilherme Bruno Rodrigues Silva - 1177412
-- Leandro Molinari - 1453411
-
 # openai-student-helper
 
 This is a small application that uses GPT-3.5 Turbo to help students to review academic contents. 
+It was developed as an activity for the discipline of Java Software Architecture at the PUC-MG.
 
 ## Requirements
 
@@ -30,4 +22,20 @@ service:
 
 3. Build the project using the command: `./gradlew build -x test`
 4. Start the SpringBoot Aplication using the command: `./gradlew bootRun`
-5. Open the browser and pass the desired title to generate `localhost:8080/v1/open-ai/tales?title=your_title_here` or use a tool like [Postman](https://www.postman.com/) to make a GET request to the same URL. Otherwise, eu can access throgh the Swagger UI at `localhost:8080/swagger-ui.html`
+5. Open the browser and access throgh the Swagger UI at `localhost:8080/swagger-ui.html`
+
+## Structure
+
+This project is divides in 3 main packages:
+- Controller: Contains the REST Controllers, and how to use the service layer
+- Service: Contains the business logic, and how to use the OpenAI API
+- Infra: Contains the infrastructure logic, and how to conect to external services
+
+## Group members
+
+- Andrew Costa Silva - 1137978
+- Arthur Guterres Boeck - 1470051
+- Danielson Augusto - 1481701
+- Diego Ribeiro Alvarenga Silva - 1200783
+- Guilherme Bruno Rodrigues Silva - 1177412
+- Leandro Molinari - 1453411
