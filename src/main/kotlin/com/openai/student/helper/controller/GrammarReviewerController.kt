@@ -13,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile
 @Validated
 @RestController
 @RequestMapping("/v1/open-ai/student-helper")
-class GrammarReviewerController(private val grammarReviewer: IGrammarReviewerService){
+class GrammarReviewerController(
+    private val grammarReviewer: IGrammarReviewerService
+){
 
     @Operation(summary = "Grammar Reviewer based on txt file", description = "Returns the text from your txt file with the suggested review in text/plain content type.")
     @PostMapping("/grammar-reviewer/text", consumes = [MULTIPART_FORM_DATA_VALUE])

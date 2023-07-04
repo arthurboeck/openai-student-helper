@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 @RestController
 @RequestMapping("/v1/open-ai/student-helper")
-class ContentSuggestionController(private val contentSuggestion: IContentSuggestionService){
+class ContentSuggestionController(
+    private val contentSuggestion: IContentSuggestionService
+){
 
     @Operation(summary = "Contents for study based on topic", description = "Returns three contents for study based on the inputted topic in text/plain content type.")
     @GetMapping("/content-suggestion/text", produces = [TEXT_PLAIN_VALUE])

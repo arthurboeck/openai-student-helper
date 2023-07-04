@@ -4,7 +4,9 @@ import com.openai.student.helper.infra.client.openai.IOpenAIService
 import org.springframework.stereotype.Service
 
 @Service
-class GrammarReviewerService(private val serviceClient: IOpenAIService) : IGrammarReviewerService {
+class GrammarReviewerService(
+    private val serviceClient: IOpenAIService
+) : IGrammarReviewerService {
 
     private val context: String = "Você é um revisor de textos."
 

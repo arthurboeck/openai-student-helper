@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 @RestController
 @RequestMapping("/v1/open-ai/student-helper")
-class QuestionsAndAnswersController(private val iQuestionsAndAnswersService: IQuestionsAndAnswersService){
+class QuestionsAndAnswersController(
+    private val iQuestionsAndAnswersService: IQuestionsAndAnswersService
+){
 
     @Operation(summary = "Questions and answers based on topic for study", description = "Returns three questions and answers for study based on the inputted topic in text/plain content type.")
     @GetMapping("/question-answer/text", produces = [TEXT_PLAIN_VALUE])
