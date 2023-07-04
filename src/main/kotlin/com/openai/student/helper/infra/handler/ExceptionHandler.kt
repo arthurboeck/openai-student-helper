@@ -7,7 +7,6 @@ import feign.FeignException
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.ValidationException
 import org.springframework.http.HttpStatus.*
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.multipart.support.MissingServletRequestPartException
@@ -20,45 +19,38 @@ class ExceptionHandler {
     @ResponseBody
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(
-        ConstraintViolationException::class,
-        ValidationException::class,
-        MissingServletRequestPartException::class,
-        InvalidFileTypeException::class,
-        ValidationException::class
+            ConstraintViolationException::class,
+            ValidationException::class,
+            MissingServletRequestPartException::class,
+            InvalidFileTypeException::class
     )
-    fun badRequestExceptionHandler(exception: Exception): ResponseEntity<ErrorApiDTO> {
-        val error = ErrorApiDTO(
-            exception.toString(),
-            "${now()}"
+    fun badRequestExceptionHandler(exception: Exception): ErrorApiDTO {
+        return ErrorApiDTO(
+                exception.toString(),
+                "${now()}"
         )
-
-        return ResponseEntity.badRequest().body(error)
     }
 
     @ResponseBody
     @ResponseStatus(UNAUTHORIZED)
     @ExceptionHandler(
-        UnauthorizedException::class,
-        FeignException.Unauthorized::class
+            UnauthorizedException::class,
+            FeignException.Unauthorized::class
     )
-    fun authenticationExceptionHandler(exception: Exception): ResponseEntity<ErrorApiDTO> {
-        val error = ErrorApiDTO(
-            exception.toString(),
-            "${now()}"
+    fun authenticationExceptionHandler(exception: Exception): ErrorApiDTO {
+        return ErrorApiDTO(
+                exception.toString(),
+                "${now()}"
         )
-
-        return ResponseEntity.status(UNAUTHORIZED).body(error)
     }
 
     @ResponseBody
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(NotFoundException::class)
-    fun notFoundExceptionHandler(exception: Exception): ResponseEntity<ErrorApiDTO> {
-        val error = ErrorApiDTO(
-            exception.toString(),
-            "${now()}"
+    fun notFoundExceptionHandler(exception: Exception): ErrorApiDTO {
+        return ErrorApiDTO(
+                exception.toString(),
+                "${now()}"
         )
-
-        return ResponseEntity.status(NOT_FOUND).body(error)
     }
 }

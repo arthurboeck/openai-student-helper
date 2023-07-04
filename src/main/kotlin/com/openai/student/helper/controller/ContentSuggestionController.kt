@@ -5,7 +5,6 @@ import com.openai.student.helper.service.contentsuggestion.IContentSuggestionSer
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.NotBlank
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
-import org.springframework.http.MediaType.TEXT_PLAIN_VALUE
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -20,7 +19,7 @@ class ContentSuggestionController(
 ){
 
     @Operation(summary = "Contents for study based on topic", description = "Returns three contents for study based on the inputted topic in text/plain content type.")
-    @GetMapping("/content-suggestion/text", produces = [TEXT_PLAIN_VALUE])
+    @GetMapping("/content-suggestion/text")
     fun contentSuggestionsInText(
         @NotBlank(message = "Topic is required")
         @RequestParam("topic") topic: String): String {
