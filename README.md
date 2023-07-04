@@ -24,12 +24,15 @@ service:
 4. Start the SpringBoot Aplication using the command: `./gradlew bootRun`
 5. Open the browser and access the Swagger UI at `localhost:8080/swagger-ui.html`
 
-## Structure
+## Project Structure
 
 This project is divides in 3 main packages:
 - Controller: Contains the REST Controllers, and how to use the service layer
 - Service: Contains the business logic, and how to use the OpenAI API
 - Infra: Contains the infrastructure logic, and how to conect to external services
+  - Client: Contains the OpenAI API client and the DTOs used to communicate with it
+  - Exception: Contains the custom exceptions used in the application
+  - Handler: Contains the exception handlers used in the application
 
 ## Group members
 
