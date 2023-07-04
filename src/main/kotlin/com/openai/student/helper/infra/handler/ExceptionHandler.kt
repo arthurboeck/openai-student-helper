@@ -1,4 +1,4 @@
-package com.openai.student.helper.handler
+package com.openai.student.helper.infra.handler
 
 import com.openai.student.helper.infra.exceptions.InvalidFileTypeException
 import com.openai.student.helper.infra.exceptions.NotFoundException
