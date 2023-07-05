@@ -14,5 +14,5 @@ spring:
   main:
     banner-mode: "console"
     application:
-      group: open-ai
-      name: open-ai-tale-generator
+      group: openai
+      name: openai-student-helper

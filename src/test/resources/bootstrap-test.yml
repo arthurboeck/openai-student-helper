@@ -11,5 +11,5 @@ spring:
   main:
     banner-mode: "off"
     application:
-      group: open-ai
-      name: open-ai-tale-generator
+      group: openai
+      name: openai-student-helper
