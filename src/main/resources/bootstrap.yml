@@ -1,7 +1,7 @@
 service:
   open-ai:
     key: <YOUR-API-KEY>
-    url: https://api.openai.com/v1
+    url: https://api.openai.com/v12
 
 server:
   port: 8080
@@ -14,5 +14,17 @@ spring:
   main:
     banner-mode: "console"
     application:
-      group: open-ai
-      name: open-ai-tale-generator
+      group: openai
+      name: openai-stundent-helper
+
+#resilience4j:
+#  circuitbreaker:
+#    configs:
+#      default:
+#        slidingWindowSize: 10
+#        minimumNumberOfCalls: 5
+#        permittedNumberOfCallsInHalfOpenState: 3
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#    instances:
+#      openai-client:
+#        baseConfig: default

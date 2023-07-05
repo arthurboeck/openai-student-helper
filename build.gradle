@@ -37,6 +37,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
+//    implementation 'io.github.resilience4j:resilience4j-kotlin:2.0.0'
+//    implementation 'io.github.resilience4j:resilience4j-retry:2.0.0'
+    implementation 'io.github.resilience4j:resilience4j-feign:2.1.0'
+//    implementation 'io.github.resilience4j:resilience4j-circuitbreaker:2.0.0'
+
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.7.1'
