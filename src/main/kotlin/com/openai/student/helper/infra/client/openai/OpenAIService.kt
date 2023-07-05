@@ -1,19 +1,22 @@
 package com.openai.student.helper.infra.client.openai
 
 import com.openai.student.helper.infra.client.openai.dto.ChatCompletionRequestDTO
+import com.openai.student.helper.infra.client.openai.dto.ChatCompletionResponseDTO
 import com.openai.student.helper.infra.client.openai.dto.ChatMessageDTO
 import com.openai.student.helper.infra.exceptions.NotFoundException
 import com.openai.student.helper.infra.exceptions.UnauthorizedException
 import feign.FeignException
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus.*
 import org.springframework.stereotype.Service
+import javax.naming.ServiceUnavailableException
 
 @Service
 class OpenAIService(
-    @Value("\${service.open-ai.key}")
-    private val openAiKey: String? = null,
-    private val iOpenAIClient: IOpenAIClient
+        @Value("\${service.open-ai.key}")
+        private val openAiKey: String? = null,
+        private val iOpenAIClient: IOpenAIClient
 ) : IOpenAIService {
 
     private val modelId: String = "gpt-3.5-turbo"
@@ -22,7 +25,7 @@ class OpenAIService(
         val chatCompletionRequest = generateChatCompletionRequest(context, question)
 
         try {
-            val response = iOpenAIClient.chatCompletion(generateAuth(), chatCompletionRequest)
+            val response = integrateOpenAIClient(chatCompletionRequest)
             return response.choices.first().message?.content ?: throw NotFoundException("No message")
 
         } catch (e: FeignException.Unauthorized) {
@@ -30,13 +33,21 @@ class OpenAIService(
         }
     }
 
+    private fun integrateOpenAIClient(chatCompletionRequest: ChatCompletionRequestDTO): ChatCompletionResponseDTO {
+        return iOpenAIClient.chatCompletion(generateAuth(), chatCompletionRequest)
+    }
+
+    private fun fallback() {
+        throw ServiceUnavailableException("Service unavailable for a while.")
+    }
+
     private fun generateChatCompletionRequest(context: String, question: String): ChatCompletionRequestDTO {
         return ChatCompletionRequestDTO(
-            model = modelId,
-            messages = listOf(
-                ChatMessageDTO(role = "system", content = context),
-                ChatMessageDTO(role = "user", content = question)
-            )
+                model = modelId,
+                messages = listOf(
+                        ChatMessageDTO(role = "system", content = context),
+                        ChatMessageDTO(role = "user", content = question)
+                )
         )
     }
 
