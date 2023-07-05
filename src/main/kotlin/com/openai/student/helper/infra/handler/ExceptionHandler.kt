@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 import java.time.LocalDateTime.*
+import javax.naming.ServiceUnavailableException
 
 
 @ControllerAdvice
@@ -50,6 +51,16 @@ class ExceptionHandler {
     fun notFoundExceptionHandler(exception: Exception): ErrorApiDTO {
         return ErrorApiDTO(
                 exception.toString(),
+                "${now()}"
+        )
+    }
+
+    @ResponseBody
+    @ResponseStatus(SERVICE_UNAVAILABLE)
+    @ExceptionHandler(ServiceUnavailableException::class)
+    fun serviceUnavailableExceptionHandler(exception: Exception): ErrorApiDTO {
+        return ErrorApiDTO(
+                exception.message.toString(),
                 "${now()}"
         )
     }
